@@ -6,6 +6,8 @@
   
             *2023.07.06 20:07
 
+            *2024.03.22 10:47 revise 1
+
 
 */
 
@@ -96,7 +98,7 @@ void pushbackList(List *L ,ListItem item ){
 }
 
 //弹出尾部元素
-void pushbackList(List *L){
+void popbackList(List *L){
      //tail指向l的前驱
     List* tail = L -> prev;
      //指向tail的前驱
@@ -125,7 +127,7 @@ void popfrontList(List *L){
 
 }
 
-//获取表内指定元素
+//获取表内是否含有指定元素，有则返回
 List* getListItem(List *L, ListItem item){
     List* pos = L-> next;
     //遍历不等于本身的话继续
@@ -142,9 +144,41 @@ List* getListItem(List *L, ListItem item){
     return NULL;
 }
 
+//表判空
+
+bool isEmpty(List *L){
+
+    return (L->next==NULL ? true : false);
+    
+}
 
 
+//获取表长度
+int getlistSize(List *L){
+    int n = 0;
+    List* p = L -> next;
+    while (p!=L)
+    {
+         n+=1;
+        p = p->next;
+    }
 
+    //若是包含头节点则+1 
+    return n+1;
+
+}
+
+
+//清除表并释放内存
+
+void clearList(List *L){
+
+ 
+    L -> next = NULL;
+    free(L);
+
+
+}
 
 
 int main(){
@@ -153,12 +187,19 @@ int main(){
 
     //添加元素到表中
     ListItem listItem = {"abc"};
-    pushbackList(list,listItem);
+    
+    pushfrontList(list,listItem);
+        //添加元素到表中
     ListItem listItem2 = {"def"};
     pushfrontList(list,listItem2);
+        //添加元素到表中
+    ListItem listItem3 = {"ghi"};
+    pushfrontList(list,listItem3);
+
 
     
-   
+   //查找元素
+   if(getListItem(list,listItem3) != NULL) cout << "CANT FIND";
 
     //遍历输出列表元素
 
@@ -169,8 +210,12 @@ int main(){
 
         p = p->next;
     }
-    
+
+    //获取列表长度
+    cout<< getlistSize(list);
+
+    clearList(list);
+    free(list);
     
     return 0;
 }
-
